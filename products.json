@@ -8,5 +8,10 @@
     "name": "foo",
     "price": 3,
     "id": 5
+  },
+  {
+    "name": "bar",
+    "price": 5,
+    "id": 6
   }
 ]
