@@ -25,4 +25,15 @@ app.get('/api/products', async(req, res, next)=> {
   }
 })
 
+app.delete('/api/products/:id', async(req, res, next)=> {
+  try {
+    console.log(req.params.id);
+    await dataLayer.destroy(req.params.id);
+    res.sendStatus(204);
+  }
+  catch(ex){
+    next(ex);
+  }
+})
+
 app.listen(3000, ()=> console.log('listening on port 3000'));

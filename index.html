@@ -32,12 +32,18 @@ input, button{
             price: '',
             error: ''
           };
+          this.destroy = this.destroy.bind(this);
+        }
+        async destroy(id){
+          await axios.delete(`/api/products/${id}`);
+          this.setState( { products: [...this.state.products.filter( product => product.id !== id)]});
         }
         async componentDidMount(){
           this.setState({ products: ( await axios.get('/api/products')).data});
         }
         render(){
           const { products, name, error, price } = this.state;
+          const { destroy } = this;
           return (
             <div>
               <h1>Acme Products</h1>
@@ -49,8 +55,9 @@ input, button{
               </div>
               <ul>
                 {
-                  products.map( product => <li onClick={()=> console.log('TO DO Destroy')} key={ product.id }>
+                  products.map( product => <li onClick={ ()=> destroy(product.id) } key={ product.id }>
                     <div>{ product.name }</div>
+                    <div>${ product.price.toFixed(2) }</div>
                   </li>)
                 }
               </ul>
