@@ -40,14 +40,14 @@ input, button{
           this.setState( { products: [...this.state.products.filter( product => product.id !== id)]});
         }
         async create(){
-          if(this.state.name === '') {
-            const error = 'name is required';
-            this.setState({ error });
-          } else {
             const product = (await axios.post('/api/products', { name: this.state.name, price: this.state.price*1 })).data;
-            this.setState({ products: [...this.state.products, product]});
-          }
-
+            console.log('frontend: ', product.message);
+            if(product.message) {
+              const error = product.message;
+              this.setState({ error });
+            } else {
+              this.setState({ products: [...this.state.products, product]});
+            }
         }
         async componentDidMount(){
           this.setState({ products: ( await axios.get('/api/products')).data});

@@ -2,7 +2,17 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const db = require('./db');
-const dataLayer = db('products.json', ()=> {});
+const dataLayer = db('products.json', (item, items)=> {
+  if(item.name === ''){
+    return 'name is required';
+  }
+  if(items.map(item => item.name).includes(item.name)){
+    return 'name must be unique';
+  }
+  if(item.price === 0){
+    return 'price is required';
+  }
+});
 
 app.use(express.json());
 
@@ -44,5 +54,10 @@ app.post('/api/products', async(req, res, next)=> {
     next(ex);
   }
 })
+
+app.use((err, req, res, next) => {
+  //console.log(err);
+  res.send({message: err.message});
+});
 
 app.listen(3000, ()=> console.log('listening on port 3000'));
