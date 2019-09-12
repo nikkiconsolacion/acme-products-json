@@ -1,7 +1,12 @@
 [
   {
-    "id": 2,
+    "name": "bazz",
+    "price": "4",
+    "id": 3
+  },
+  {
     "name": "bar",
-    "price": 3
+    "price": "2",
+    "id": 4
   }
 ]

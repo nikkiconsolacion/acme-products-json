@@ -33,17 +33,22 @@ input, button{
             error: ''
           };
           this.destroy = this.destroy.bind(this);
+          this.create = this.create.bind(this);
         }
         async destroy(id){
           await axios.delete(`/api/products/${id}`);
           this.setState( { products: [...this.state.products.filter( product => product.id !== id)]});
+        }
+        async create(){
+          const product = (await axios.post('/api/products', { name: this.state.name, price: this.state.price })).data;
+          this.setState({ products: [...this.state.products, product]});
         }
         async componentDidMount(){
           this.setState({ products: ( await axios.get('/api/products')).data});
         }
         render(){
           const { products, name, error, price } = this.state;
-          const { destroy } = this;
+          const { destroy, create } = this;
           return (
             <div>
               <h1>Acme Products</h1>
@@ -51,13 +56,13 @@ input, button{
               <div className='form'>
                 <input placeholder='Product Name' value={ name } onChange={ ev => this.setState({ name: ev.target.value })}/>
                 <input value={ price } placeholder='Product Price' onChange={ ev => this.setState({ price: ev.target.value })}/>
-                <button onClick={()=> console.log('TODO Create')}>Create</button>
+                <button onClick={ create }>Create</button>
               </div>
               <ul>
                 {
                   products.map( product => <li onClick={ ()=> destroy(product.id) } key={ product.id }>
                     <div>{ product.name }</div>
-                    <div>${ product.price.toFixed(2) }</div>
+                    <div>${ product.price }</div>
                   </li>)
                 }
               </ul>

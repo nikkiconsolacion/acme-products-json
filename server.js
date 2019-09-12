@@ -36,4 +36,14 @@ app.delete('/api/products/:id', async(req, res, next)=> {
   }
 })
 
+app.post('/api/products', async(req, res, next)=> {
+  console.log(req.body)
+  try {
+    res.send(await dataLayer.create(req.body))
+  }
+  catch(ex){
+    next(ex);
+  }
+})
+
 app.listen(3000, ()=> console.log('listening on port 3000'));
