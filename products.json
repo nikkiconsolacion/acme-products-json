@@ -1,12 +1,12 @@
 [
   {
     "name": "bazz",
-    "price": "4",
+    "price": 4,
     "id": 3
   },
   {
-    "name": "bar",
-    "price": "2",
-    "id": 4
+    "name": "foo",
+    "price": 3,
+    "id": 5
   }
 ]
